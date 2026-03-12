@@ -1,6 +1,5 @@
-
-
 ## Seeing the Context: Rich Visual Context-Aware Speech Recognition via Multimodal Reasoning
+
 [![arXiv](https://img.shields.io/badge/arXiv-2603.07263-b31b1b.svg)](https://arxiv.org/pdf/2603.07263)
 
 This repository contains the open-source implementation for **ContextAVSR**, a multimodal project leveraging **Qwen2.5-Omni-7B** for Context Audio-Visual Speech Recognition (AVSR) tasks. It includes training scripts, configuration details, and architectural assets.
@@ -67,12 +66,23 @@ bash code/train.sh
 
 The training script expects data in JSONL format. The default paths configured are:
 
-- `../data/merge_1211-training_valid.jsonl`
-- `../data/MEIJU25_CN_AnNo-training_valid.jsonl`
-- `../data/chineselips-match_result-VL-training.jsonl`
-- Validation: `../data/merge_1211-random_1000_samples_valid.jsonl`
+- `../data/test_train.jsonl`
+- Validation: `../data/test_val.jsonl`
 
 Please ensure your data is formatted correctly for SWIFT SFT (Supervised Fine-Tuning) and placed in the appropriate directories.
+
+## 🔄 Data Pipeline
+
+The `code/datapipeline/` directory contains a suite of tools for processing and refining the multimodal dataset:
+
+- **ASR & Audio Processing**:
+  - `whisper_asr.py`: Uses `openai/whisper-large-v3` for offline speech recognition and WER calculation.
+  - `doubao_api.py`: Connects to the Doubao ASR API for cloud-based speech recognition.
+
+- **Data Tagging & Filtering**:
+  - `Gemini_tagging.py`: Utilizes Gemini models to generate rich tags and metadata for video/audio content.
+  - `GPT_filter_trainingdata_withgt.py`: Employs GPT-4o to filter and clean training data by comparing with ground truth.
+  - `qwen3vl.py`: Deploys `Qwen3-VL` using vLLM to process visual information and generate multimodal descriptions.
 
 ## 📂 Directory Structure
 
